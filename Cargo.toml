@@ -1,0 +1,14 @@
+# This line needs to come before anything else in Cargo.toml
+cargo-features = ["codegen-backend"]
+
+[package]
+name = "cranelift-ir-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+
+[profile.dev]
+codegen-backend = "cranelift"
+panic = 'abort'

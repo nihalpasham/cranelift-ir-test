@@ -1,0 +1,63 @@
+set opt_level=none
+set tls_model=macho
+set libcall_call_conv=isa_default
+set probestack_size_log2=12
+set probestack_strategy=inline
+set bb_padding_log2_minus_one=0
+set regalloc_checker=0
+set regalloc_verbose_logs=0
+set enable_alias_analysis=1
+set enable_verifier=0
+set enable_pcc=0
+set is_pic=1
+set use_colocated_libcalls=0
+set enable_float=1
+set enable_nan_canonicalization=0
+set enable_pinned_reg=0
+set enable_atomics=1
+set enable_safepoints=0
+set enable_llvm_abi_extensions=1
+set unwind_info=1
+set preserve_frame_pointers=1
+set machine_code_cfg_info=0
+set enable_probestack=1
+set enable_jump_tables=1
+set enable_heap_access_spectre_mitigation=1
+set enable_table_access_spectre_mitigation=1
+set enable_incremental_compilation_cache_checks=0
+target aarch64 has_lse=0 has_pauth=0 sign_return_address_all=0 sign_return_address=0 sign_return_address_with_bkey=0 use_bti=0
+
+
+function u0:7() -> i8 apple_aarch64 {
+; symbol _ZN54_$LT$$LP$$RP$$u20$as$u20$std..process..Termination$GT$6report17heddb2e503a8e42d5E
+; instance Instance { def: Item(DefId(1:5609 ~ std[6a0d]::process::{impl#57}::report)), args: [] }
+; abi FnAbi { args: [ArgAbi { layout: TyAndLayout { ty: (), layout: Layout { size: Size(0 bytes), align: AbiAndPrefAlign { abi: Align(1 bytes), pref: Align(8 bytes) }, abi: Aggregate { sized: true }, fields: Arbitrary { offsets: [], memory_index: [] }, largest_niche: None, variants: Single { index: 0 }, max_repr_align: None, unadjusted_abi_align: Align(1 bytes) } }, mode: Ignore }], ret: ArgAbi { layout: TyAndLayout { ty: std::process::ExitCode, layout: Layout { size: Size(1 bytes), align: AbiAndPrefAlign { abi: Align(1 bytes), pref: Align(8 bytes) }, abi: Scalar(Initialized { value: Int(I8, false), valid_range: 0..=255 }), fields: Arbitrary { offsets: [Size(0 bytes)], memory_index: [0] }, largest_niche: None, variants: Single { index: 0 }, max_repr_align: None, unadjusted_abi_align: Align(1 bytes) } }, mode: Direct(ArgAttributes { regular: NoUndef, arg_ext: None, pointee_size: Size(0 bytes), pointee_align: None }) }, c_variadic: false, fixed_count: 1, conv: Rust, can_unwind: false }
+
+; kind  loc.idx   param    pass mode                            ty
+; stack _0    std::process::ExitCode            1b 1, 8              storage=ss0
+; ret   _0      -          Direct(ArgAttributes { regular: NoUndef, arg_ext: None, pointee_size: Size(0 bytes), pointee_align: None }) std::process::ExitCode
+; arg   _1      -          Ignore                               ()
+
+; kind  local ty                              size align (abi,pref)
+; zst   _1    ()                                0b 1, 8              align=8,offset=
+
+    ss0 = explicit_slot 16, align = 16
+    ss1 = explicit_slot 16, align = 16
+
+block0:
+    nop 
+    jump block1
+
+block1:
+    nop 
+; _0 = const std::process::ExitCode::SUCCESS
+    v0 = iconst.i8 0
+    stack_store v0, ss1  ; v0 = 0
+; write_cvalue: Addr(Pointer { base: Stack(ss0), offset: Offset32(0) }, None): std::process::ExitCode <- ByRef(Pointer { base: Stack(ss1), offset: Offset32(0) }, None): std::process::ExitCode
+    v1 = stack_load.i8 ss1
+    stack_store v1, ss0
+; 
+; return
+    v2 = stack_load.i8 ss0
+    return v2
+}

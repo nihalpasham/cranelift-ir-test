@@ -1,0 +1,73 @@
+set opt_level=none
+set tls_model=macho
+set libcall_call_conv=isa_default
+set probestack_size_log2=12
+set probestack_strategy=inline
+set bb_padding_log2_minus_one=0
+set regalloc_checker=0
+set regalloc_verbose_logs=0
+set enable_alias_analysis=1
+set enable_verifier=0
+set enable_pcc=0
+set is_pic=1
+set use_colocated_libcalls=0
+set enable_float=1
+set enable_nan_canonicalization=0
+set enable_pinned_reg=0
+set enable_atomics=1
+set enable_safepoints=0
+set enable_llvm_abi_extensions=1
+set unwind_info=1
+set preserve_frame_pointers=1
+set machine_code_cfg_info=0
+set enable_probestack=1
+set enable_jump_tables=1
+set enable_heap_access_spectre_mitigation=1
+set enable_table_access_spectre_mitigation=1
+set enable_incremental_compilation_cache_checks=0
+target aarch64 has_lse=0 has_pauth=0 sign_return_address_all=0 sign_return_address=0 sign_return_address_with_bkey=0 use_bti=0
+
+
+function u0:2(i64) apple_aarch64 {
+; symbol _ZN3std3sys9backtrace28__rust_begin_short_backtrace17hf06c45a5bda3a323E
+; instance Instance { def: Item(DefId(1:7139 ~ std[6a0d]::sys::backtrace::__rust_begin_short_backtrace)), args: [Binder { value: fn(), bound_vars: [] }, ()] }
+; abi FnAbi { args: [ArgAbi { layout: TyAndLayout { ty: fn(), layout: Layout { size: Size(8 bytes), align: AbiAndPrefAlign { abi: Align(8 bytes), pref: Align(8 bytes) }, abi: Scalar(Initialized { value: Pointer(AddressSpace(0)), valid_range: 1..=18446744073709551615 }), fields: Primitive, largest_niche: Some(Niche { offset: Size(0 bytes), value: Pointer(AddressSpace(0)), valid_range: 1..=18446744073709551615 }), variants: Single { index: 0 }, max_repr_align: None, unadjusted_abi_align: Align(8 bytes) } }, mode: Direct(ArgAttributes { regular: NonNull | NoUndef, arg_ext: None, pointee_size: Size(0 bytes), pointee_align: None }) }], ret: ArgAbi { layout: TyAndLayout { ty: (), layout: Layout { size: Size(0 bytes), align: AbiAndPrefAlign { abi: Align(1 bytes), pref: Align(8 bytes) }, abi: Aggregate { sized: true }, fields: Arbitrary { offsets: [], memory_index: [] }, largest_niche: None, variants: Single { index: 0 }, max_repr_align: None, unadjusted_abi_align: Align(1 bytes) } }, mode: Ignore }, c_variadic: false, fixed_count: 1, conv: Rust, can_unwind: false }
+
+; kind  loc.idx   param    pass mode                            ty
+; zst   _0    ()                                0b 1, 8              align=8,offset=
+; ret   _0      -          Ignore                               ()
+; arg   _1      = v0       Direct(ArgAttributes { regular: NonNull | NoUndef, arg_ext: None, pointee_size: Size(0 bytes), pointee_align: None }) Binder { value: fn(), bound_vars: [] }
+
+; kind  local ty                              size align (abi,pref)
+; ssa   _1    Binder { value: fn(), bound_vars: [] }    8b 8, 8              var=0
+; zst   _2    ()                                0b 1, 8              align=8,offset=
+
+    sig0 = (i64) apple_aarch64
+    fn0 = colocated u0:5 sig0 ; Instance { def: FnPtrShim(DefId(2:3497 ~ core[0294]::ops::function::FnOnce::call_once), Binder { value: fn(), bound_vars: [] }), args: [Binder { value: fn(), bound_vars: [] }, ()] }
+
+block0(v0: i64):
+    v1 -> v0
+    nop 
+; write_cvalue: Var(_1, var0): Binder { value: fn(), bound_vars: [] } <- ByVal(v0): Binder { value: fn(), bound_vars: [] }
+    jump block1
+
+block1:
+    nop 
+; 
+; _0 = <F as std::ops::FnOnce<()>>::call_once(move _1, const ())
+    call fn0(v1)
+    jump block2
+
+block2:
+    nop 
+; 
+; _2 = std::intrinsics::black_box::<()>(const ())
+; write_cvalue: Addr(Pointer { base: Dangling(Align(8 bytes)), offset: Offset32(0) }, None): () <- ByRef(Pointer { base: Dangling(Align(8 bytes)), offset: Offset32(0) }, None): ()
+    jump block3
+
+block3:
+    nop 
+; 
+; return
+    return
+}
